@@ -20,15 +20,30 @@ Install python-dev
 
 This repository relies on a fork I made. To clone the repository use:
 ```
- git clone --recurse-submodules -j8 https://github.com/GrgoMariani/NVidia-Jetson-DHT22-Python
+ git clone --recurse-submodules -j4 https://github.com/FreemanX/NVidia-Jetson-DHT22-Python3
 ```
 
 ### Setup
+After cloning the repo, edit `jetsonGPIO/jetsonGPIO.h` (add pin15 to jetson nano's enum):
+```
+enum jetsonNanoGPIONumber {
+       jetsonnano_pin32 = 168,    // J21 - Pin 32 - ??? -     LCD_BL_PWM
+       jetsonnano_pin16 = 232,    // J21 - Pin 16 - ??? -     SPI_2_CS1
+       jetsonnano_pin13 = 14,     // J21 - Pin 13 - ??? -     SPI_2_SCK
+       jetsonnano_pin33 = 38,     // J21 - Pin 33 - ??? -     GPIO_PE6
+       jetsonnano_pin18 = 15,     // J21 - Pin 18 - ??? -     SPI_2_CS0
+       jetsonnano_pin31 = 200,    // J21 - Pin 31 - ??? -     GPIO_PZ0
+       jetsonnano_pin37 = 12,     // J21 - Pin 37 - ??? -     SPI_2_MOSI
+       jetsonnano_pin29 = 149,    // J21 - Pin 29 - ??? -     CAM_AF_EN
+       jetsonnano_pin15 = 194,    // J21 - Pin 15 - ??? -     LCD_TE
+} ;
+```
+
 Edit C_DHT.c to edit the pin number you wish to use to communicate with your DHT22.
 Default set to:
  ```
- #define PIN0 jetsontx2_pin37  //2-pin from bottom left
- #define PIN1 jetsontx2_pin29  //6-th pin from bottom left
+#define PIN0 jetsonnano_pin16
+#define PIN1 jetsonnano_pin15
  ```
 If you don't know the pin numbers google __Jetson gpio pinout tk1/tx1/tx2/xavier__
 
