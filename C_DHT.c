@@ -23,9 +23,9 @@
 #include <Python.h>
 
 
-// This is currently set to work with Jetson Xavier
-#define PIN0 jetsonxavier_pin37                                  //Define which pin on your Jetson is connected to DHT22 as PIN0 when you use C_DHT.readSensor(0)
-#define PIN1 jetsonxavier_pin29								     //Define which pin on your Jetson is connected to DHT22 as PIN1 when you use C_DHT.readSensor(1),    Check jetsonGPIO.h for more
+// This is currently set to work with Jetson Nano
+#define PIN0 jetsonnano_pin16                                  //Define which pin on your Jetson is connected to DHT22 as PIN0 when you use C_DHT.readSensor(0)
+#define PIN1 jetsonnano_pin15								     //Define which pin on your Jetson is connected to DHT22 as PIN1 when you use C_DHT.readSensor(1),    Check jetsonGPIO.h for more
 
 typedef struct	{
 	int *byte0;	int *byte1;	int *byte2;	int *byte3;	int *byteCheckSum;
@@ -166,7 +166,21 @@ static PyMethodDef C_DHT22Methods[] = {
 };
 
 
-PyMODINIT_FUNC 
-initC_DHT(void){
-	(void)Py_InitModule("C_DHT", C_DHT22Methods);
+// PyMODINIT_FUNC 
+// initC_DHT(void){
+// 	(void)Py_InitModule("C_DHT", C_DHT22Methods);
+// };
+
+static struct PyModuleDef C_DHT_Def = {
+	PyModuleDef_HEAD_INIT,
+	"C_DHT Module",
+	"",
+	-1,
+	C_DHT22Methods,
 };
+
+PyMODINIT_FUNC
+PyInit_C_DHT(void)
+{
+	return PyModule_Create(&C_DHT_Def);
+}
